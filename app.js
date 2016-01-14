@@ -30,38 +30,29 @@ mongoose.connect(DBurl,function(error){
 
 //Step 4. Creating the model.Pass the model name which will be the name of collection on the database.
 
-var Users =mongoose.model('usersProfiles4',userSchema.userSchema);
-
-var gappu = new Users({
+var Users =mongoose.model('usersProfiles9',userSchema.userSchema);
+var isAdminValue=false;
+for(var i=0;i<100; i++)
+{
+    var userIdValue ="ABN" + i; //some random user id generation.100 user id genration.
     
-    userid : "navin17",
-    password : "tappu",
-    isAdmin : true
-}).save(function(err){
-    if(err)
-    console.log('cannot save yr');
-    else console.log("mission");
+    var passwordValue="encrypted" + i;
     
-});
-
-var gappu1 = new Users({
+    var toBeInsterted = new Users ({
+    userid :   userIdValue ,
+    password : passwordValue,
+    isAdmin : isAdminValue});
+    isAdminValue = !(isAdminValue);
+    console.log(Object.keys(toBeInsterted));
+    toBeInsterted.save(function(error){
+       if(!error)
+       {
+           console.log("object save successfully to DB");
+           
+           
+       }
+        else console.log("Save failed to DB");
+       
+    });    
     
-    userid : "17",
-    password : "tappu",
-    isAdmin : false
-}).save(function(err){
-    if(err)
-    console.log('cannot save yr');
-    else console.log("mission");
-});
-
-var prakash = new Users({
-    
-    userid : "navin17prakash",
-    password : "some",
-    isAdmin : false
-}).save(function(err){
-    if(err)
-        console.log('navin it is done');
-        else console.log("one more ");
-       });
+}
