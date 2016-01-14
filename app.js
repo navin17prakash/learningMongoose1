@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 console.log('navin');
-mongoose.connect('mongodb://navinprakash:123456@ds037415.mongolab.com:37415/mnotes',function(err){
+mongoose.connect('mongodb://navinprakash:6@ds037415.mongolab.com:37415/mnotes',function(err){
     if(err)
         console.log('something wrong');
         else console.log("ok ok");
