@@ -9,6 +9,7 @@
   "author": "Navin Prakash",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^4.3.5"
+    "mongoose": "^4.3.5",
+    "express" :"*"
   }
 }
