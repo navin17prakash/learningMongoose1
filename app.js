@@ -32,7 +32,7 @@ mongoose.connect(DBurl,function(error){
 
 var Users =mongoose.model('usersProfiles9',userSchema.userSchema);
 var isAdminValue=false;
-for(var i=0;i<100; i++)
+for(var i=0;i<100; i++) //note- this loop will start running even before connection is successful. Non blocking nature of node.
 {
     var userIdValue ="ABN" + i; //some random user id generation.100 user id genration.
     
