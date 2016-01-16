@@ -14,7 +14,8 @@ var express=require('express');
 var express = require('express');
 var expressApp = express();
 var apiRouter = expressApp.Router();
-
+var morgan = require('morgan');
+var bodyParser = require('body-parser'); 
 
 //step 2 import the schema of the data. Shcema is defined in a seperate file.
 var userSchema = require('./userSchema.js');
@@ -39,40 +40,6 @@ var Users =mongoose.model(configData.modelName,userSchema.userSchema);
 
 
 
-for(var i=0;i<100; i++) //note- this loop will start running even before connection is successful. Non blocking nature of node.
-{
-    var userIdValue ="ABN" + i; //some random user id generation.100 user id genration.
-    
-    var passwordValue="encrypted" + i;
-    
-    var toBeInsterted = new Users ({
-    userid :   userIdValue ,
-    password : passwordValue,
-    isAdmin : isAdminValue});
-    isAdminValue = !(isAdminValue);
-    //console.log(Object.keys(toBeInsterted));
-    toBeInsterted.save(function(error){
-       if(!error)
-       {
-           console.log("object save successfully to DB");
-           
-           
-       }
-        else console.log("Save failed to DB");
-       
-    });    
-    
-}
 
 
-var router =express.Router();
 
-router.route('/hello').get(function(req,res){
-    res.send('hello hello hello');
-    
-});
-expressApp.use('/hello',router);
-expressApp.listen(3000, function(){
-    console.log('am listending expressApp');
-})
-console.log(Object.keys(router));
