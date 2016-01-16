@@ -11,6 +11,8 @@
 //step 1 require the basic modules. 
 var mongoose = require('mongoose');
 var express=require('express');
+var express = require('express');
+var expressApp = express();
 
 //step 2 import the schema of the data. Shcema is defined in a seperate file.
 var userSchema = require('./userSchema.js');
@@ -43,7 +45,7 @@ for(var i=0;i<100; i++) //note- this loop will start running even before connect
     password : passwordValue,
     isAdmin : isAdminValue});
     isAdminValue = !(isAdminValue);
-    console.log(Object.keys(toBeInsterted));
+    //console.log(Object.keys(toBeInsterted));
     toBeInsterted.save(function(error){
        if(!error)
        {
@@ -56,3 +58,16 @@ for(var i=0;i<100; i++) //note- this loop will start running even before connect
     });    
     
 }
+
+
+var router =express.Router();
+
+router.route('/hello').get(function(req,res){
+    res.send('hello hello hello');
+    
+});
+expressApp.use('/hello',router);
+expressApp.listen(3000, function(){
+    console.log('am listending expressApp');
+})
+console.log(Object.keys(router));
