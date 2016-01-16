@@ -2,7 +2,7 @@
 // also the basic steps to use mongoose to couple NodeApp and MongoDB using mongoose npm module.
 
 
-//it adds 100 users to the DB and then exposes and API to read all the users in DB and return in JSON Format. 
+//it creates API routes namely login,createUser and allusers  to login ,create user and find all users
 
 //--BY Navin Prakash
 
@@ -35,8 +35,10 @@ mongoose.connect(connectionString,function(error){
 
 //Step 4. Creating the model.Pass the model name which will be the name of collection on the database.
 
-var Users =mongoose.model('usersProfiles9',userSchema.userSchema);
-var isAdminValue=false;
+var Users =mongoose.model(configData.modelName,userSchema.userSchema);
+
+
+
 for(var i=0;i<100; i++) //note- this loop will start running even before connection is successful. Non blocking nature of node.
 {
     var userIdValue ="ABN" + i; //some random user id generation.100 user id genration.

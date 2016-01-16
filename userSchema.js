@@ -1,8 +1,7 @@
 var mongoose =require('mongoose');
 var schema = new mongoose.Schema({
     userid :  String,
-    password : String,
-    isAdmin : Boolean 
+    password : String
     });
 module.exports.userSchema   = schema;
     
