@@ -13,20 +13,23 @@ var mongoose = require('mongoose');
 var express=require('express');
 var express = require('express');
 var expressApp = express();
+var apiRouter = expressApp.Router();
+
 
 //step 2 import the schema of the data. Shcema is defined in a seperate file.
 var userSchema = require('./userSchema.js');
-
+var configData = require('./config.js');
+var connectionString = configData.databaseConnectionString;
 console.log('Schema imported.Attempting DB connection');
-//Database connection url
-var DBurl = 'mongodb://navinprakash:123456@ds037415.mongolab.com:37415/mnotes';
 
 //step 3. Connect to the MongoDatabase. Refer to the api documenatation of mongoose for refrence 
-mongoose.connect(DBurl,function(error){
+
+mongoose.connect(connectionString,function(error){
     if(error)
         console.log('Attempted DB connection has failed.');
         else console.log("Connection is successful"); 
 });
+
 
 
 
