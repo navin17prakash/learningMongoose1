@@ -44,6 +44,25 @@ apiRouter.get('/sample',function(request,response){
    response.send('first api running'); 
 });
 
+
+apiRouter.get('/setuprootuser',function(request, response){
+    var rootUser = new Users({
+       userid : 'root',
+       password : 'root',
+       isAdmin : true 
+    });
+    rootUser.save(rootUser,function(error){
+        if(error){
+            console.log("Root user cannot be created");
+            response.send('Root User cannot be created. Please attempt with debugging');
+        }
+        else
+        {
+            console.log('Root User has been successfully created.This user can be used to access the system');
+            response.send('Root user has been created with adminstrator access.');
+        }
+    });
+});
 apiRouter.post('/login',function loginRouteCallback (request,response){
     Users.findOne({userid : request.body.userid }, function findOneCallback (error,user){
     if(user){ 
