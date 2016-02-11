@@ -51,7 +51,7 @@ apiRouter.get('/setuprootuser',function(request, response){
        password : 'root',
        isAdmin : true 
     });
-    rootUser.save(rootUser,function(error){
+    rootUser.save(function(error){
         if(error){
             console.log("Root user cannot be created");
             response.send('Root User cannot be created. Please attempt with debugging');
@@ -82,7 +82,7 @@ apiRouter.post('/createuser',function createUserCallback(request,response){
        userid : request.body.userid,
        password : request.body.password
    });
-   saveObject.save(saveObject,function saveCallback(error){
+   saveObject.save(function saveCallback(error){
        if(!error) {console.log('User has been saved successfully');
                   response.send('user'+request.body.userid+'created');
                   }
