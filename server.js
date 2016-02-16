@@ -11,7 +11,6 @@
 //step 1 require the basic modules. 
 var mongoose = require('mongoose');
 var express=require('express');
-var express = require('express');
 
 var morgan = require('morgan');
 var bodyParser = require('body-parser'); 
@@ -26,19 +25,25 @@ var configData = require('./config.js');
 var connectionString = configData.databaseConnectionString;
 console.log('Schema imported.Attempting DB connection');
 
-//step 3. Connect to the MongoDatabase. Refer to the api documenatation of mongoose for refrence 
+// Step 3 Configuring the right middlewares
+expressApp.use(bodyParser.urlencoded({extended :false}));
+expressApp.use(bodyParser.json());
+expressApp.use(morgan('combined'));
 
+
+//step 4. Connect to the MongoDatabase. Refer to the api documenatation of mongoose for refrence 
 
 mongoose.connect(connectionString,function(error){
     if(error)
         console.log('Attempted DB connection has failed.');
         else console.log("Connection is successful"); 
 });
-//Step 4. Creating the model.Pass the model name which will be the name of collection on the database.
+
+//Step 5. Creating the model.Pass the model name which will be the name of collection on the database.
 
 var Users =mongoose.model(configData.modelName,userSchema.userSchema);
-expressApp.use(bodyParser.json());
-expressApp.use(bodyParser.urlencoded({extended : false}));
+
+//Step 6 Adding Routes. This could be defined in seperate JS files
 
 apiRouter.get('/sample',function(request,response){
    response.send('first api running'); 
@@ -80,7 +85,8 @@ apiRouter.post('/login',function loginRouteCallback (request,response){
 apiRouter.post('/createuser',function createUserCallback(request,response){
    var saveObject = new Users({
        userid : request.body.userid,
-       password : request.body.password
+       password : request.body.password,
+       isAdmin : request.body.isAdmin
    });
    saveObject.save(function saveCallback(error){
        if(!error) {console.log('User has been saved successfully');
@@ -88,6 +94,18 @@ apiRouter.post('/createuser',function createUserCallback(request,response){
                   }
        else console.log('Save operation has failed');
    });
+});
+
+apiRouter.get('/getallusers',function getallUsers(request,response){
+    Users.find({},function(error,result){
+        if(error){
+            response.send('No users are found in the DB');
+        }
+        else{
+            response.json(result);
+        }
+        
+    });
 });    
 
 expressApp.use('/api',apiRouter);
